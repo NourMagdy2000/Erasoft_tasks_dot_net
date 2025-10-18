@@ -1,4 +1,5 @@
 ﻿using HealthCare.Data;
+using HealthCare.Models;
 using HealthCare.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,30 +18,30 @@ namespace HealthCare.Controllers
             return View(doctors.AsEnumerable());
         }
         [HttpGet]
-        public IActionResult Add(int doctorId)
+        public IActionResult Add(int id)
         {
-            ViewBag.DoctorId = doctorId;
+            ViewBag.DoctorId = id;
             return View();
          
 
         }
 
         [HttpPost]
-        public RedirectToActionResult Add(int doctorId, ApointmentFields apointmentFields)
+        public RedirectToActionResult Add( Apointment apointment)
         {
 
-            var doctor = _db.Doctors.FirstOrDefault(d => d.Id == doctorId);
+            var doctor = _db.Doctors.FirstOrDefault(d => d.Id == apointment.DoctorId);
             if (doctor is not null)
             {       
-                var apointment = new HealthCare.Models.Apointment()
+                var apointment2 = new HealthCare.Models.Apointment()
             {
-                DoctorId = doctorId,
-                PatientName = apointmentFields.PatientName,
-                Date = apointmentFields.Date,
-                Time = apointmentFields.Time
+                DoctorId = apointment.DoctorId,
+                PatientName = apointment.PatientName,
+                Date = apointment.Date,
+                Time = apointment.Time
             };
 
-            _db.Apointments.Add(apointment);
+            _db.Apointments.Add(apointment2);
             _db.SaveChanges();
 
          }

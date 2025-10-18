@@ -11,12 +11,16 @@
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
                         <h4 class="card-title text-center mb-4">Reserve an Appointment</h4>
-
+                        <form class="d-flex">
+                            <a href="/Apointments/Index/@ViewBag.DoctorId" class="btn btn-primary">
+                                See all apointments
+                            </a>
+                        </form>
+                       
                         <form asp-controller="Doctors" asp-action="Add" method="post">
                             <!-- Patient id -->
                             <div class="mb-3 ">
-                                <label for="PatientName" class="form-label">Patient Name</label>
-                                <input type="text" value=@ViewBag.DoctorId hidden class="form-control " id="doctorId" name="doctorId" placeholder="Enter patient's name" required>
+                                <input type="text" value=@ViewBag.DoctorId hidden class="form-control " id="doctorId" name="DoctorId" placeholder="Enter patient's name" required>
                             </div>
                             <!-- Patient Name -->
                             <div class="mb-3">
