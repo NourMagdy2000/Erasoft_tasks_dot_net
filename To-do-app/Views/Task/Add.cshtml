@@ -1,0 +1,34 @@
+﻿@model To_do_app.Models.Task
+
+
+<div class="container mt-5">
+    <h2 class="mb-4">Add New Task</h2>
+
+    <form asp-controller="Task" asp-action="Add" method="post" class="border p-4 rounded shadow-sm" enctype="multipart/form-data" >
+        <div class="mb-3" asp-validation-summary="All">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" id="Title" name="Title" class="form-control" placeholder="Enter task title" >
+            <span class="text-danger" asp-validation-for="@Model.Title"></span>
+        </div>
+
+        <div class="mb-3">
+            <label for="Deadline" class="form-label">Deadline</label>
+            <input type="datetime-local" id="Deadline" name="Deadline" class="form-control" >
+        </div>
+
+        <div class="mb-3">
+            <label for="file" class="form-label">File (optional)</label>
+            <input type="file" id="file" name="File" class="form-control" placeholder="Attach file name or link" formenctype="application/x-www-form-urlencoded">
+        </div>
+
+        <div class="form-check mb-3">
+            <input type="checkbox" id="IsCompleted" name="IsCompleted" class="form-check-input" value="true">
+            <label for="IsCompleted" class="form-check-label">Mark as completed</label>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/Task/Index" class="btn btn-secondary">Back to List</a>
+            <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,65 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model To_do_app.Models.Task
+
+<div class="container mt-5">
+    <h2 class="mb-4">Update Task</h2>
+
+    <form asp-controller="Task" asp-action="Update" method="post" class="border p-4 rounded shadow-sm" enctype="multipart/form-data">
+        <input hidden type="text" value="@Model.Id" id="Title" name="Id" class="form-control" placeholder="Enter task title" required>
+
+        
+        <div class="mb-3">
+            <label for="Title" class="form-label">Title</label>
+            <input type="text" value="@Model.Title" id="Title" name="Title" class="form-control" placeholder="Enter task title" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="Deadline" class="form-label">Deadline</label>
+            <input value="@Model.DeadLine.ToString("yyyy-MM-dd HH:mm")" type="datetime-local" id="Deadline" name="Deadline" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="file" class="form-label">File (optional)</label>
+
+            <div class="mb-2">
+                <img id="filePreview" src="~/assets/files/@Model.File" alt="File preview" class="img-fluid rounded border" style="max-height: 200px;">
+            </div>
+            <input  type="file" id="file" name="File" class="form-control" placeholder="Attach file name or link" formenctype="application/x-www-form-urlencoded">
+        </div>
+
+        <div class="form-check mb-3">
+            
+            <input @Model.IsCompleted? checked value="@Model.IsCompleted" type="checkbox" id="IsCompleted" name="IsCompleted" class="form-check-input" value="true">
+            <label for="IsCompleted" class="form-check-label">Mark as completed</label>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <a href="/Task/Index" class="btn btn-secondary">Back to List</a>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </div>
+    </form>
+</div>
+<script>
+    // ✅ Change preview automatically when a new file is chosen
+    document.getElementById("file").addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("filePreview");
+
+        if (file) {
+            // For image preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            // If no file selected, revert to old image
+            preview.src = '@Url.Content("~/assets/files/" + Model.File)';
+        }
+    });
+</script>

@@ -1,0 +1,36 @@
+﻿@model To_do_app.Models.Task
+
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Task Details</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">@Model.Title</h4>
+
+            <p><strong>Completed:</strong> @(Model.IsCompleted ? "Yes" : "No")</p>
+
+            <p>
+                <strong>Deadline:</strong>
+                @Model.DeadLine.ToString("yyyy-MM-dd HH:mm")
+            </p>
+
+            <p>
+                <strong>File:</strong>
+                @if (!string.IsNullOrEmpty(Model.File))
+                {
+                    <a href="~/assets/files/@Model.File" target="_blank">@Model.File</a>
+                }
+                else
+                {
+                    <span>No file uploaded</span>
+                }
+            </p>
+        </div>
+
+        <div class="card-footer d-flex justify-content-end gap-2">
+            <a href="/Task/Update/@Model.Id" class="btn btn-warning btn-sm">Edit</a>
+            <a href="/Task/Delete/@Model.Id" class="btn btn-danger btn-sm">Delete</a>
+            <a href="/Task/Index" class="btn btn-secondary btn-sm">Back</a>
+        </div>
+    </div>
+</div>
