@@ -5,7 +5,8 @@
     <h2 class="mb-4">Add New Task</h2>
 
     <form asp-controller="Task" asp-action="Add" method="post" class="border p-4 rounded shadow-sm" enctype="multipart/form-data" >
-        <div class="mb-3" asp-validation-summary="All">
+     <div class="text-danger" asp-validation-summary="All"></div>
+        <div class="mb-3">
             <label for="Title" class="form-label">Title</label>
             <input type="text" id="Title" name="Title" class="form-control" placeholder="Enter task title" >
             <span class="text-danger" asp-validation-for="@Model.Title"></span>
