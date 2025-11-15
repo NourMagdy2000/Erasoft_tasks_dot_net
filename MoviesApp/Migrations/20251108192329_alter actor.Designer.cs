@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MoviesApp.Data_access;
 
@@ -11,9 +12,11 @@ using MoviesApp.Data_access;
 namespace MoviesApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251108192329_alter actor")]
+    partial class alteractor
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,18 +117,19 @@ namespace MoviesApp.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Img")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("img")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("status")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -193,7 +197,7 @@ namespace MoviesApp.Migrations
             modelBuilder.Entity("MoviesApp.Models.Movie_sub_imgs", b =>
                 {
                     b.HasOne("MoviesApp.Models.Movie", "Movie")
-                        .WithMany("movie_Sub_Imgs")
+                        .WithMany()
                         .HasForeignKey("Movieid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -204,11 +208,6 @@ namespace MoviesApp.Migrations
             modelBuilder.Entity("MoviesApp.Models.Category", b =>
                 {
                     b.Navigation("Movies");
-                });
-
-            modelBuilder.Entity("MoviesApp.Models.Movie", b =>
-                {
-                    b.Navigation("movie_Sub_Imgs");
                 });
 #pragma warning restore 612, 618
         }

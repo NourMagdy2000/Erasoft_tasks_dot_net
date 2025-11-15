@@ -1,5 +1,72 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<MoviesApp.Models.Cinema>
+
+<div id="tableExample3" data-list='{"valueNames":["name","nationality"],"page":5,"pagination":true}'>
+
+    <!-- 🔹 Add New Cinema Button -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="mb-0">Cinemas List</h5>
+        <a asp-area="Admin" asp-controller="Cinema" asp-action="AddCinema" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus me-1"></i> Add New Cinema
+        </a>
+    </div>
+
+    <!-- 🔍 Search -->
+    <div class="row justify-content-end g-0">
+        <div class="col-auto col-sm-5 mb-3">
+            <form>
+                <div class="input-group">
+                    <input class="form-control form-control-sm shadow-none search" type="search" placeholder="Search..." aria-label="search" />
+                    <div class="input-group-text bg-transparent"><span class="fa fa-search fs--1 text-600"></span></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🧾 Table -->
+    <div class="table-responsive scrollbar">
+        <table class="table table-bordered table-striped fs--1 mb-0">
+            <thead class="bg-200 text-900">
+                <tr>
+                    <th class="sort" data-sort="name">Name</th>
+
+                    <th style="width:150px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                @foreach (var Cinema in Model)
+                {
+                    <tr>
+                        <td class="name">@Cinema.Name</td>
+
+
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@Cinema.Id" class="btn btn-info btn-sm text-white">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a asp-action="UpdateCinema" asp-route-id="@Cinema.Id" class="btn btn-warning btn-sm text-white">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a asp-action="DeleteCinema" asp-route-id="@Cinema.Id" class="btn btn-danger btn-sm text-white">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 🔸 Pagination -->
+    <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-sm btn-falcon-default me-1" type="button" title="Previous" data-list-pagination="prev">
+            <span class="fas fa-chevron-left"></span>
+        </button>
+        <ul class="pagination mb-0"></ul>
+        <button class="btn btn-sm btn-falcon-default ms-1" type="button" title="Next" data-list-pagination="next">
+            <span class="fas fa-chevron-right"></span>
+        </button>
+    </div>
+</div>
+

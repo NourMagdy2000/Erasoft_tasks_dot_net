@@ -1,4 +1,7 @@
+﻿
+  using Microsoft.EntityFrameworkCore;
 namespace MoviesApp
+
 {
     public class Program
     {
@@ -8,7 +11,14 @@ namespace MoviesApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            var connectionString =
+            builder.Configuration.GetConnectionString("DefaultConnection")
+                ?? throw new InvalidOperationException("Connection string"
+                + "'DefaultConnection' not found.");
 
+            //AppConfiguration.Config(builder.Services, connectionString);
+
+            builder.Services.Config(connectionString);
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

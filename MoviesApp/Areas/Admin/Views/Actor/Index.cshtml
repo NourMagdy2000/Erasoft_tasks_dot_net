@@ -1,12 +1,12 @@
-﻿@model IEnumerable<MoviesApp.Models.Movie>
+﻿@model IEnumerable<MoviesApp.Models.Actor>
 
 <div id="tableExample3" data-list='{"valueNames":["name","nationality"],"page":5,"pagination":true}'>
 
-    <!-- 🔹 Add New Movie Button -->
+    <!-- 🔹 Add New Actor Button -->
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h5 class="mb-0">Movies List</h5>
-        <a asp-area="Admin" asp-controller="Movie" asp-action="AddMovie" class="btn btn-primary btn-sm">
-            <i class="fas fa-plus me-1"></i> Add New Movie
+        <h5 class="mb-0">Actors List</h5>
+        <a asp-area="Admin" asp-controller="Actor" asp-action="AddActor" class="btn btn-primary btn-sm">
+            <i class="fas fa-plus me-1"></i> Add New Actor
         </a>
     </div>
 
@@ -27,34 +27,37 @@
         <table class="table table-bordered table-striped fs--1 mb-0">
             <thead class="bg-200 text-900">
                 <tr>
-                    <th class="sort" data-sort="Title">Title</th>
-                    <th class="sort" data-sort="Date">Date</th>
-                    <th>Status</th>
-                    <th>Price</th>
+                    <th class="sort" data-sort="name">Name</th>
+                    <th class="sort" data-sort="nationality">Nationality</th>
+                    <th>Image</th>
                     <th style="width:150px;">Actions</th>
                 </tr>
             </thead>
             <tbody class="list">
-                @* public string Title { get; set; }
-                public string Description { get; set; }
-                public DateTime Date { get; set; }
-                public bool status { get; set; }
-                public decimal price { get; set; } *@
-                @foreach (var Movie in Model)
+                @foreach (var actor in Model)
                 {
                     <tr>
-                        <td class="Title">@Movie.Title</td>
-                        <td class="Date">@Movie.Date.ToString()</td>
-                        <td class="Status">@Movie.Status</td>
-                        <td class="Price">@Movie.Price</td>
-                
+                        <td class="name">@actor.Name</td>
+                        <td class="nationality">@actor.Nantionality</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(actor.Img))
+                            {
+                                <img src="@actor.Img" alt="@actor.Name" width="60" height="60" style="object-fit:cover; border-radius:8px;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No Image</span>
+                            }
+                        </td>
                         <td>
                             <div class="btn-group" role="group">
-                             
-                                <a asp-action="UpdateMovie" asp-route-id="@Movie.Id" class="btn btn-warning btn-sm text-white">
+                                <a asp-action="Details" asp-route-id="@actor.Id" class="btn btn-info btn-sm text-white">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a asp-action="UpdateActor" asp-route-id="@actor.Id" class="btn btn-warning btn-sm text-white">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a asp-action="DeleteMovie" asp-route-id="@Movie.Id" class="btn btn-danger btn-sm text-white">
+                                <a asp-action="DeleteActor" asp-route-id="@actor.Id" class="btn btn-danger btn-sm text-white">
                                     <i class="fas fa-trash"></i>
                                 </a>
                             </div>

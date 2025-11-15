@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
-namespace Ecommerce.Repos
+namespace MoviesApp.Repos
 {
     public interface IRepository<T> where T : class
     {

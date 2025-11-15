@@ -1,0 +1,79 @@
+﻿@using MoviesApp.ViewModels
+@model AddMovieVM
+        @* public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime Date { get; set; }
+        public bool status { get; set; }
+        public decimal price { get; set; }
+
+        public string img {  get; set; }
+        public int CategoryId { get; set; } *@
+<div class="container">
+    <div class="row mb-3 align-items-center my-3">
+        <div class="col-md-6">
+            <h2 class="display-6">Create new Movie</h2>
+        </div>
+    </div>
+
+    <div class="row my-3">
+        <div class="col-12">
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="name" class="form-label">title</label>
+                    <input class="form-control" name="Title">
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">img</label>
+                    <input class="form-control" name="File" type="file" accept=".png , .jpg">
+                </div>
+                <div class="mb-3">
+                    <label for="SubImages" class="form-label">SubImages</label>
+                    <input class="form-control" name="SubImages" type="file" accept=".png , .jpg" multiple>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Leave a description here" style="height: 100px" name="Description"></textarea>
+                        <label for="description">You Description Here...</label>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="Price" class="form-label">Price</label>
+                    <input class="form-control" name="Price" type="number">
+                </div>
+                <div class="mb-3">
+                    <label for="Date" class="form-label">Date and time</label>
+                    <input class="form-control" name="Date" type="datetime-local">
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="Status" class="form-select">
+                        <option value="true">Active</option>
+                        <option value="false">InActive</option>
+                    </select>
+                </div>
+            
+                <div class="mb-3">
+                    <label for="CategoryId" class="form-label">Categories</label>
+                    <select name="CategoryId" class="form-control">
+                        <option>--Select Category--</option>
+                        @foreach (var item in Model.Categories)
+                        {
+                            @* @if (ViewBag.CategoryId == item.Id)
+                            {
+                                <option value="@item.Id" selected> @item.Name</option>
+                                continue;
+                            } *@
+                            <option value="@item.Id"> @item.Name</option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+

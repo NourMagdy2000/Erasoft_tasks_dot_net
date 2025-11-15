@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using MoviesApp.Data_access;
 using System.Linq.Expressions;
 
-namespace Ecommerce.Repos
+namespace MoviesApp.Repos
 {
     public class Repository<T> : IRepository<T>  where T : class 
     {

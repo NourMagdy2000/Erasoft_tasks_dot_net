@@ -1,16 +1,13 @@
-﻿namespace MoviesApp.Models
+﻿namespace MoviesApp.ViewModels
 {
-    public class Actor
+    public class UpdateActorVM
     {
 
         public int Id { get; set; }
         public string Name { get; set; }
         public string Nantionality { get; set; }
 
-        public string Img { get; set; } = "defaultImg.png";
-
-
-
+       public IFormFile ? File { get; set; }
 
 
     }

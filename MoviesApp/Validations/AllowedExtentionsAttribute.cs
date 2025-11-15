@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ecommerce.Validations
+namespace MoviesApp.Validations
 {
     public class AllowedExtentionsAttribute : ValidationAttribute
     {
