@@ -1,7 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@@using MoviesApp.ViewModels
-@model AddMovieVM
+@model UpdateMovieVM
 @* public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -97,7 +97,22 @@
                         }
                     </select>
                 </div>
+                    <select id="Actors"
+                            name="SelectedActors"
+                            class="form-select"
+                            multiple
+                            size="6">
 
+                        @foreach (var actor in Model.AllActors)
+                        {
+                            bool isSelected = Model.MovieActors != null && Model.MovieActors.Contains(actor.Id);
+
+                            <option value="@actor.Id" selected="@(isSelected ? "selected" : null)">
+                                @actor.Name
+                            </option>
+                        }
+                    </select>
+                    <small class="text-muted">Hold Ctrl or Command to select multiple movies</small>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

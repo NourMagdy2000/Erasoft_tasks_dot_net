@@ -1,4 +1,68 @@
-﻿<div class="row g-3 mb-3">
+﻿@using MoviesApp.ViewModels
+
+
+@model HomeVM
+
+
+<div class="container mt-5">
+    <div class="row g-4">
+
+        <!-- Movies Card -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Movies</h6>
+                        <h3 class="mb-0">@Model.MovieNumber</h3>
+                    </div>
+                    <i class="fas fa-film fa-2x text-primary"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Categories Card -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Categories</h6>
+                        <h3 class="mb-0">@Model.CategoryNumber</h3>
+                    </div>
+                    <i class="fas fa-tags fa-2x text-success"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actors Card -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Actors</h6>
+                        <h3 class="mb-0">@Model.ActorNumber</h3>
+                    </div>
+                    <i class="fas fa-user fa-2x text-warning"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cinemas Card -->
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="text-muted mb-2">Cinemas</h6>
+                        <h3 class="mb-0">@Model.CinemaNumber</h3>
+                    </div>
+                    <i class="fas fa-building fa-2x text-danger"></i>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@* 
+<div class="row g-3 mb-3">
     <div class="col-xxl-6 col-xl-12">
         <div class="row g-3">
             <div class="col-12">
@@ -994,4 +1058,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@

@@ -22,6 +22,8 @@ namespace MoviesApp
             services.AddScoped<IRepository<Category>, Repository<Category>>();
             services.AddScoped<IRepository<Cinema>, Repository<Cinema>>();
             services.AddScoped<IRepository<Movie>, Repository<Movie>>();
+            services.AddScoped<IRepository<Cinema_movies>, Repository<Cinema_movies>>();
+            services.AddScoped<IRepository<MovieActors>, Repository<MovieActors>>();
 
             services.AddScoped<IRepository<Movie_sub_imgs>, Repository<Movie_sub_imgs>>();
 

@@ -13,6 +13,8 @@
         public int CategoryId { get; set; }
         public Category ?Category { get; set; }
         public ICollection<Movie_sub_imgs> movie_Sub_Imgs { get; set; }
+        public ICollection<MovieActors> ?MovieActors { get; set; }
+        public ICollection<Cinema_movies> ?Cinema_Movies { get; set; }
 
 
     }

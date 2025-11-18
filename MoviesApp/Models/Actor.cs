@@ -10,7 +10,7 @@
         public string Img { get; set; } = "defaultImg.png";
 
 
-
+       public ICollection<MovieActors>? MovieActors { get; set; }
 
 
     }

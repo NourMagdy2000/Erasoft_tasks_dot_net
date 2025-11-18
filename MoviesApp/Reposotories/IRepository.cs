@@ -23,5 +23,11 @@ namespace MoviesApp.Repos
             );
 
         Task CommitAsync(CancellationToken cancellationToken = default);
+       Task<int> CountAsync(
+    Expression<Func<T, bool>>? expressions = null,
+    Expression<Func<T, object>>?[] includes = null,
+    bool trackd = true,
+    CancellationToken cancellationToken = default
+    );
     }
 }

@@ -63,6 +63,16 @@ namespace MoviesApp.Repos
             var entity = (await GetAsync(expressions , includes , trackd , cancellationToken)).FirstOrDefault() ;
             return entity; 
         }
+        public async Task<int> CountAsync(
+            Expression<Func<T , bool>>? expressions  = null ,
+            Expression<Func<T , object>>?[] includes= null ,
+            bool trackd = true , 
+            CancellationToken cancellationToken = default
+            )
+        {
+             int count = _dbSet.Count();
+            return count; 
+        }
         
         public async Task CommitAsync(CancellationToken cancellationToken = default)
         {

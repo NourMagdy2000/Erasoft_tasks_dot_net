@@ -2,6 +2,7 @@
 using MoviesApp.Models;
 using MoviesApp.Repos;
 using MoviesApp.ViewModels;
+using NuGet.Protocol.Core.Types;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -11,18 +12,23 @@ namespace MoviesApp.Areas.Admin.Controllers
 
     public class MovieController : Controller
     {
-
+        IRepository<MovieActors> _movieActorsRepository;
         IRepository<Movie> MovieRepository;
         IRepository<Category> CategoryRepository;
         IRepository<Movie_sub_imgs> movie_sub_imgsRepository;
+        IRepository<Actor> _actorRepository;
 
 
-        public MovieController(IRepository<Movie> MovieRepository, IRepository<Category> categoryRepository, IRepository<Movie_sub_imgs> movie_sub_imgsRepository)
+        public MovieController(IRepository<Actor> _actorRepository,
+            IRepository<Movie> MovieRepository, IRepository<Category> categoryRepository,
+            IRepository<Movie_sub_imgs> movie_sub_imgsRepository, IRepository<MovieActors> movieActorsRepository
+            )
         {
+            this._actorRepository = _actorRepository;
             this.MovieRepository = MovieRepository;
             this.CategoryRepository = categoryRepository;
             this.movie_sub_imgsRepository = movie_sub_imgsRepository;
-
+            this._movieActorsRepository = movieActorsRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -37,11 +43,10 @@ namespace MoviesApp.Areas.Admin.Controllers
         {
             var categories = await CategoryRepository.GetAsync();
 
-
-            return View(new AddMovieVM() { Categories = categories as List<Category>, Movie = new Movie() });
+            return View(new AddMovieVM() { Categories = categories as List<Category>, Movie = new Movie(), MovieActors = await _actorRepository.GetAsync() });
         }
         [HttpPost]
-        public async Task<IActionResult> AddMovie(Movie Movie, IFormFile File, List<IFormFile> SubImages)
+        public async Task<IActionResult> AddMovie(Movie Movie, IFormFile File, List<IFormFile> SubImages, List<int> SelectedActors)
         {
 
 
@@ -96,19 +101,42 @@ namespace MoviesApp.Areas.Admin.Controllers
                     }
                 }
             }
+            if (SelectedActors != null)
+            {
+                foreach (var actorId in SelectedActors)
+                {
+                    var relation = new MovieActors()
+                    {
+                        ActorId = actorId,
+                        MovieId = Movie.Id
+                    };
+
+                    await _movieActorsRepository.AddAsync(relation);
+                }
+                await _movieActorsRepository.CommitAsync();
+            }
+
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
         public async Task<IActionResult> UpdateMovie(int id)
         {
-            var MovieInDB = await MovieRepository.GetOneAsync(c => c.Id == id,includes:[p=>p.movie_Sub_Imgs], trackd: false);
+            var MovieInDB = await MovieRepository.GetOneAsync(c => c.Id == id, includes: [p => p.movie_Sub_Imgs], trackd: false);
 
             var categories = await CategoryRepository.GetAsync();
-            ViewBag.CategoryId= MovieInDB.CategoryId;
-            return View(new AddMovieVM() { Categories = categories as List<Category>, Movie =MovieInDB });
+            ViewBag.CategoryId = MovieInDB.CategoryId;
+            List<int> movieActorIds = new List<int>();
+            IEnumerable<MovieActors> movieActors = await _movieActorsRepository.GetAsync(m => m.MovieId == MovieInDB.Id);
+            IEnumerable<Actor> allActors =await _actorRepository.GetAsync();
+            foreach (MovieActors movieActor in movieActors)
+            {
+                movieActorIds.Add(movieActor.ActorId);
+
+            }
+            return View(new UpdateMovieVM() { Categories = categories as List<Category>, Movie = MovieInDB , AllActors=   allActors, MovieActors=movieActorIds });
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateMovie(Movie Movie, IFormFile File, List<IFormFile> SubImages)
+        public async Task<IActionResult> UpdateMovie(Movie Movie, IFormFile File, List<IFormFile> SubImages,List<int>SelectedActors)
         {
 
             var MovieInDB = await MovieRepository.GetOneAsync(c => c.Id == Movie.Id, trackd: false);
@@ -120,7 +148,7 @@ namespace MoviesApp.Areas.Admin.Controllers
             //    TempData["Error"] = "Invalid Inputs";
             //    return View(Movie);
             //}
-            Movie updatedMovie = new Movie() { Id = Movie.Id, Title = Movie.Title, Description = Movie.Description, Date = Movie.Date, CategoryId = Movie.CategoryId, Price = Movie.Price, Img = Movie.Img, Status=Movie.Status,};
+            Movie updatedMovie = new Movie() { Id = Movie.Id, Title = Movie.Title, Description = Movie.Description, Date = Movie.Date, CategoryId = Movie.CategoryId, Price = Movie.Price, Img = Movie.Img, Status = Movie.Status, };
 
             if (File is not null && File.Length > 0)
             {
@@ -152,7 +180,25 @@ namespace MoviesApp.Areas.Admin.Controllers
 
             MovieRepository.Update(updatedMovie);
             await MovieRepository.CommitAsync();
+            var record_movie_actors = await _movieActorsRepository.GetAsync(ma => ma.MovieId == Movie.Id);
+            foreach (var record in record_movie_actors)
+            {
+                _movieActorsRepository.Delete(record);
+            }
+            if (SelectedActors != null)
+            {
+                foreach (var actorId in SelectedActors)
+                {
+                    MovieActors relation = new MovieActors
+                    {
+                        ActorId = actorId,
+                        MovieId = Movie.Id
+                    };
 
+                    await _movieActorsRepository.AddAsync(relation);
+                }
+                await _movieActorsRepository.CommitAsync();
+            }
             if (SubImages is not null)
             {
                 foreach (var item in SubImages)

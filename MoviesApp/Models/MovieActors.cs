@@ -6,12 +6,12 @@ namespace MoviesApp.Models
     public class MovieActors
     {
 
-        private int MovieId { get; set; }
-        private Movie Movie { get; set; }
+        public int MovieId { get; set; }
+        public Movie Movie { get; set; }
 
-        private int ActorId { get; set; }
+        public int ActorId { get; set; }
         
-        private Actor Actor { get; set; }
+        public Actor Actor { get; set; }
 
 
     }

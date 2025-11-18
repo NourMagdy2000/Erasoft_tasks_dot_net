@@ -70,10 +70,24 @@
                     </select>
                 </div>
 
+                <!-- Movies Selector -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Movies in this Cinema</label>
+
+                    <select id="Actors"
+                            name="SelectedActors"
+                            class="form-select"
+                            multiple
+                            size="6">
+                        @foreach (var actor in Model.MovieActors)
+                        {
+                                        <option value="@actor.Id">@actor.Name</option>
+                        }
+                    </select>
+
+                    <small class="text-muted">Hold Ctrl to select multiple movies</small>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>
     </div>
 </div>
-
-
